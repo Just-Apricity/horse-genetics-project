@@ -1,0 +1,216 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f5f0; /* Light beige background */
+    color: #333; /* Dark text */
+    text-align: center; /* Centers all content horizontally */
+}
+
+header {
+    background-color: #aa856c; /* Dark brown */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.info-container {
+    text-align: center;
+    margin: 20px auto;
+    font-size: 1.2em;
+    max-width: 800px;
+}
+
+/* Section styles */
+.section-big {
+    background-color: #5a3e2b; /* Dark brown */
+    color: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+}
+
+.section-big h1 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.section {
+    background-color: #fff; /* White background */
+    border: 2px dotted #5a3e2b; /* Dotted dark brown border */
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 700px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+.section h2 {
+    font-size: 1.5em;
+    color: #5a3e2b; /* Dark brown */
+    margin-bottom: 10px;
+}
+
+.section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.section ul li {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.section ul li strong {
+    color: #5a3e2b; /* Dark brown */
+}
+
+/* Hint styling */
+.hint {
+    font-style: italic;
+    color: #999; /* Lighter grey for hints */
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+/* Button styling */
+button {
+    display: inline-block;
+    padding: 10px 20px; /* Adds space inside the button */
+    font-size: 1.2rem; /* Makes the text larger */
+    font-weight: bold; /* Makes the text bold */
+    color: #f5f5dc; /* Light cream text color */
+    background-color: #4b3621; /* Dark brown background */
+    border: 2px solid #3a2a1a; /* Slightly darker brown border */
+    border-radius: 8px; /* Slightly rounded corners */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    text-align: center; /* Centers the text inside the button */
+    margin: 10px; /* Adds spacing between buttons */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    text-decoration: none; /* Removes underline from links styled as buttons */
+}
+
+button:hover {
+    background-color: #a57d54; /* Even darker brown background on hover */
+    color: #f5f5dc; /* Light cream text color */
+    border-color: #b6814c; /* Darker border on hover */
+    transform: scale(1.05); /* Slightly enlarges the button on hover */
+}
+
+/* Selected button styling */
+button.selected {
+    background-color: #a57d54; /* Darker brown background */
+    color: #f5f5dc; /* Light cream text color */
+    border-color: #b6814c; /* Darker border */
+    transform: none; /* No hover effect when selected */
+}
+
+/* Disabled button styling (if needed) */
+button:disabled {
+    background-color: #f0e8d9; /* Very light tan background for disabled buttons */
+    color: #999; /* Gray text for disabled buttons */
+    border-color: #ccc; /* Gray border for disabled buttons */
+    cursor: not-allowed; /* Shows a "not allowed" cursor */
+    transform: none; /* No hover effect for disabled buttons */
+}
+
+/* Button styling */
+a {
+    display: inline-block;
+    padding: 10px 20px; /* Adds space inside the button */
+    font-size: 1.2rem; /* Makes the text larger */
+    font-weight: bold; /* Makes the text bold */
+    color: #f5f5dc; /* Light cream text color */
+    background-color: #4b3621; /* Dark brown background */
+    border: 2px solid #3a2a1a; /* Slightly darker brown border */
+    border-radius: 8px; /* Slightly rounded corners */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+    text-align: center; /* Centers the text inside the button */
+    margin: 10px; /* Adds spacing between buttons */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    text-decoration: none; /* Removes underline from links styled as buttons */
+}
+
+a:hover {
+    background-color: #a57d54; /* Even darker brown background on hover */
+    color: #f5f5dc; /* Light cream text color */
+    border-color: #b6814c; /* Darker border on hover */
+    transform: scale(1.05); /* Slightly enlarges the button on hover */
+    text-decoration: none; /* Ensures no underline on hover */
+}
+
+/* Selected button styling */
+a.selected {
+    background-color: #a57d54; /* Darker brown background */
+    color: #f5f5dc; /* Light cream text color */
+    border-color: #b6814c; /* Darker border */
+    transform: none; /* No hover effect when selected */
+}
+
+/* Centering content */
+.section, .section-big, .info-container {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.header-button {
+    background-color: #2a1a0a; /* Darker brown for header button */
+    color: white;
+    border-color: rgba(54, 31, 10, 0.568); /* Darker border for header button */
+    text-decoration: none; /* Removes underline from links styled as buttons */
+
+}
+.header-button:hover {
+    background-color: #3a2a1a; /* Slightly lighter brown on hover */
+    color: white; /* Keeps the text color white */
+    border-color: rgba(54, 31, 10, 0.568); /* Keeps the same border color on hover */
+    transform: scale(1.05); /* Slightly enlarges the button on hover */
+    text-decoration: none; /* Ensures no underline on hover */
+
+}
+
+/* Submit button container */
+.submit-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit-button-container button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f5f5dc;
+    background-color: #4b3621;
+    border: 3px solid #3a2a1a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button-container button:hover {
+    background-color: #3a2a1a;
+    color: #f5f5dc;
+    border-color: #2a1a0a;
+    transform: scale(1.05);
+}

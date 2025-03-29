@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horse Genetics Result</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Horse Genetics Helper</h1>
+        <nav>
+            <a class="header-button" href="homepage.html">Home</a>
+            <a class="header-button" href="fullgenelist.html">Full List</a>
+        </nav>
+    </header>
+    <div class="info-container" id="result-container">
+        <!-- Result will be dynamically generated here -->
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const dilutions = params.get('dilutions');
+        const patterns = params.get('patterns');
+        const g = params.get('g');
+
+        const resultContainer = document.getElementById('result-container');
+
+        // Mapping object for button values to display names
+        const dilutionMapping = {
+            "D/": "Grullo",
+            "Z/": "Silver Dapple",
+            "Prl/prl": "pearl, although heterozygous, so it doesn't display",
+            "Prl/Prl": "Black Pearl",
+            "Ch/": "Classic Champagne",
+            "Rn/": "Blue Roan",
+            "Cr/": "Smokey Black",
+            "Cr/Cr": "Smokey Cream"
+        };
+
+        const patternMapping = {
+            "O/": "Overo",
+            "T/": "Tobiano",
+            "Lp/": "Leopard",
+            "PATN1/": "PATN1 (varnish)",
+            "Rb/": "Rabicano",
+            "Sw/": "Splash White",
+            "W/": "White",
+            "Sb/": "Sabino",
+            "SB1/": "Sabino 1 (more sabino)"
+        };
+
+        // Helper function to map values to display names
+        function mapValues(values, mapping) {
+            return values
+                .split('_')
+                .map(value => mapping[value] || value) // Use the mapping or fallback to the original value
+                .join(', ');
+        }
+
+        // Format the genotype (raw button values)
+        let genotype = 'E/_';
+
+        // Only add dilutions if they exist and are not "no_dilution"
+        if (dilutions && dilutions !== 'no_dilution') {
+            genotype += `, ${dilutions}`;
+        }
+
+        // Only add patterns if they exist and are not "no_white_markings"
+        if (patterns && patterns !== 'no_white_markings') {
+            genotype += `, ${patterns}`;
+        }
+
+        // Format the dilutions for display
+        const formattedDilutions = dilutions && dilutions !== 'no_dilution'
+            ? mapValues(dilutions, dilutionMapping)
+            : null;
+
+        // Format the white patterns for display
+        const formattedPatterns = patterns && patterns !== 'no_white_markings'
+            ? mapValues(patterns, patternMapping)
+            : null;
+
+        // Determine the "grey out" message
+        const greyOutMessage = g === 'g' ? 'will' : 'will not';
+
+        // Generate the coat description based on conditions
+        let coatDescription = '';
+
+        if (dilutions === 'no_dilution' && patterns === 'no_white_markings') {
+            // Case 4: Neither dilutions nor patterns are selected
+            coatDescription = `
+                <p style="font-size: smaller;">The genotype for this coat is... <strong>${genotype}</strong></p>
+                <p style="font-size: larger;">
+                    This coat looks like a <strong>black</strong> base with no dilutions or white markings.
+                    This coat <strong>${greyOutMessage}</strong> grey out!
+                </p>
+            `;
+        } else if (dilutions === 'no_dilution') {
+            // Case 3: No dilutions, but patterns are selected
+            coatDescription = `
+                <p style="font-size: smaller;">The genotype for this coat is... <strong>${genotype}</strong></p>
+                <p style="font-size: larger;">
+                    This coat looks like a <strong>black</strong> base with no dilutions and <strong>${formattedPatterns}</strong>.
+                    This coat <strong>${greyOutMessage}</strong> grey out!
+                </p>
+            `;
+        } else if (patterns === 'no_white_markings') {
+            // Case 2: Dilutions are selected, but no patterns
+            coatDescription = `
+                <p style="font-size: smaller;">The genotype for this coat is... <strong>${genotype}</strong></p>
+                <p style="font-size: larger;">
+                    This coat looks like a <strong>black</strong> base with dilutions of <strong>${formattedDilutions}</strong> and no markings.
+                    This coat <strong>${greyOutMessage}</strong> grey out!
+                </p>
+            `;
+        } else {
+            // Case 1: Both dilutions and patterns are selected
+            coatDescription = `
+                <p style="font-size: smaller;">The genotype for this coat is... <strong>${genotype}</strong></p>
+                <p style="font-size: larger;">
+                    This coat looks like a <strong>black</strong> base with dilutions of <strong>${formattedDilutions}</strong>. This coat also has <strong>${formattedPatterns}</strong> markings.
+                    This coat <strong>${greyOutMessage}</strong> grey out!
+                </p>
+            `;
+        }
+
+        // Display the result
+        resultContainer.innerHTML = coatDescription;
+    </script>
+</body>
+</html>

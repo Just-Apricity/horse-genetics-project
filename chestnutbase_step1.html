@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Dilutions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Horse Genetics Helper</h1>
+        <nav>
+            <a class="header-button" href="homepage.html">Home</a>
+            <a class="header-button" href="fullgenelist.html">Full List</a>
+        </nav>
+    </header>
+    <div class="info-container">
+        <p>Does this horse have any dilutions?</p>
+    </div>
+    <div class="button-container">
+        <button onclick="toggleSelection('cream')">Cream</button>
+        <button onclick="toggleSelection('D/')">Dun</button>
+        <button onclick="toggleSelection('Z/')">Silver</button>
+        <button onclick="toggleSelection('pearl')">Pearl</button>
+        <button onclick="toggleSelection('Ch/')">Champagne</button>
+        <button onclick="toggleSelection('Rn/')">Roan</button>
+        <button onclick="selectNoDilution()">No Dilution</button>
+    </div>
+    <div class="submit-button-container">
+        <button onclick="submitSelections()">Next</button>
+    </div>
+    <p class="hint">Hint: Select as many as you want! Almost all dilutions can overlap, although its VERY rare to see more than two.</p>
+
+    <script>
+        const selectedDilutions = new Set();
+        let noDilutionSelected = false;
+
+        function toggleSelection(dilution) {
+            console.log("toggleSelection called with:", dilution); // Debugging
+
+            if (noDilutionSelected) {
+                alert("You cannot select other options after choosing 'No Dilution'.");
+                return;
+            }
+
+            // Special handling for "Cream"
+            if (dilution === 'cream') {
+                console.log("Cream selected, prompting for single or double..."); // Debugging
+
+                if (selectedDilutions.has('Cr/') || selectedDilutions.has('Cr/Cr')) {
+                    alert("You have already selected a cream type. Unselect it first to change.");
+                    return;
+                }
+
+                // Prompt the user to choose between Single Cream and Double Cream
+                const creamType = prompt("Is this Single Cream or Double Cream? Type 'single' or 'double':").toLowerCase();
+                if (creamType === 'single') {
+                    dilution = 'Cr/';
+                } else if (creamType === 'double') {
+                    dilution = 'Cr/Cr';
+                } else {
+                    alert("Invalid input. Please type 'single' or 'double'.");
+                    return;
+                }
+
+                // Add the "selected" class to the Cream button
+                const creamButton = document.querySelector(`button[onclick="toggleSelection('cream')"]`);
+                creamButton.classList.add('selected');
+            }
+
+            // Special handling for "Pearl"
+            if (dilution === 'pearl') {
+                console.log("Pearl selected, prompting for single or double..."); // Debugging
+
+                if (selectedDilutions.has('Prl/prl') || selectedDilutions.has('Prl/Prl')) {
+                    alert("You have already selected a pearl type. Unselect it first to change.");
+                    return;
+                }
+
+                // Prompt the user to choose between Single Pearl and Double Pearl
+                const pearlType = prompt("Is this Single Pearl or Double Pearl? Pearl only appers if it is homozygous. Type 'single' or 'double':").toLowerCase();
+                if (pearlType === 'single') {
+                    dilution = 'Prl/prl'; // Single Pearl is represented as Prl/prl
+                } else if (pearlType === 'double') {
+                    dilution = 'Prl/Prl';
+                } else {
+                    alert("Invalid input. Please type 'single' or 'double'.");
+                    return;
+                }
+
+                // Add the "selected" class to the Pearl button
+                const pearlButton = document.querySelector(`button[onclick="toggleSelection('pearl')"]`);
+                pearlButton.classList.add('selected');
+            }
+
+            const button = document.querySelector(`button[onclick="toggleSelection('${dilution}')"]`);
+
+            if (selectedDilutions.has(dilution)) {
+                selectedDilutions.delete(dilution);
+                button.classList.remove('selected'); // Remove the "selected" class
+            } else if (selectedDilutions.size < 6) {
+                selectedDilutions.add(dilution);
+                button.classList.add('selected'); // Add the "selected" class
+            } else {
+                alert("You can select up to 6 dilutions.");
+            }
+
+            console.log("Current selections:", Array.from(selectedDilutions)); // Debugging
+        }
+
+        function selectNoDilution() {
+            if (selectedDilutions.size > 0) {
+                alert("You cannot select 'No Dilution' after choosing other options.");
+                return;
+            }
+
+            noDilutionSelected = true;
+
+            // Clear all selected buttons
+            document.querySelectorAll('button.selected').forEach(button => {
+                button.classList.remove('selected');
+            });
+
+            // Add the "selected" class to the "No Dilution" button
+            const noDilutionButton = document.querySelector(`button[onclick="selectNoDilution()"]`);
+            noDilutionButton.classList.add('selected');
+        }
+
+        function submitSelections() {
+            if (!noDilutionSelected && selectedDilutions.size === 0) {
+                alert("Please select at least one dilution or choose 'No Dilution'.");
+                return;
+            }
+
+            const dilutions = noDilutionSelected ? "no_dilution" : Array.from(selectedDilutions).join('_');
+            console.log("Selected dilutions:", dilutions); // Debugging
+            location.href = `chestnutbase_step2.html?dilutions=${dilutions}`;
+        }
+    </script>
+</body>
+</html>

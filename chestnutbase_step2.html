@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select White Patterns</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Horse Genetics Helper</h1>
+        <nav>
+            <a class="header-button" href="homepage.html">Home</a>
+            <a class="header-button" href="fullgenelist.html">Full List</a>
+        </nav>
+    </header>
+    <div class="info-container">
+        <p>Does this horse have any white markings?</p>
+    </div>
+    <div class="button-container">
+        <button onclick="toggleSelection('O/')">Overo</button>
+        <button onclick="toggleSelection('T/')">Tobiano</button>
+        <button onclick="toggleSelection('Lp/')">Leopard</button>
+        <button onclick="toggleSelection('PATN1/')">PATN1</button>
+        <button onclick="toggleSelection('Rb/')">Rabicano</button>
+        <button onclick="toggleSelection('Sw/')">Splashed White</button>
+        <button onclick="toggleSelection('W/')">Dominant White</button>
+        <button onclick="toggleSelection('Sb/')">Sabino</button>
+        <button onclick="toggleSelection('SB1/')">Sabino 1</button>
+        <button onclick="selectNoWhiteMarkings()">No White Markings</button> <!-- New button -->
+    </div>
+    <div class="submit-button-container">
+        <button onclick="submitSelections()">Next</button>
+    </div>
+    <p class="hint">Hint: You can also technically have as many white genes as you'd like since they all exist in different locus', but careful! Some homozygous genes cause problems!</p>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const dilutions = params.get('dilutions');
+        const selectedPatterns = new Set();
+        let noWhiteMarkingsSelected = false;
+
+        function toggleSelection(pattern) {
+            if (noWhiteMarkingsSelected) {
+                alert("You cannot select other options after choosing 'No White Markings'.");
+                return;
+            }
+
+            const button = document.querySelector(`button[onclick="toggleSelection('${pattern}')"]`);
+
+            if (selectedPatterns.has(pattern)) {
+                selectedPatterns.delete(pattern);
+                button.classList.remove('selected'); // Remove the "selected" class
+            } else if (selectedPatterns.size < 9) {
+                selectedPatterns.add(pattern);
+                button.classList.add('selected'); // Add the "selected" class
+            } else {
+                alert("You can select up to 9 white patterns.");
+            }
+
+            console.log("Current selections:", Array.from(selectedPatterns)); // Debugging
+        }
+
+        function selectNoWhiteMarkings() {
+            if (selectedPatterns.size > 0) {
+                alert("You cannot select 'No White Markings' after choosing other options.");
+                return;
+            }
+
+            noWhiteMarkingsSelected = true;
+
+            // Clear all selected buttons
+            document.querySelectorAll('button.selected').forEach(button => {
+                button.classList.remove('selected');
+            });
+
+            // Add the "selected" class to the "No White Markings" button
+            const noWhiteMarkingsButton = document.querySelector(`button[onclick="selectNoWhiteMarkings()"]`);
+            noWhiteMarkingsButton.classList.add('selected');
+        }
+
+        function submitSelections() {
+            if (!noWhiteMarkingsSelected && selectedPatterns.size === 0) {
+                alert("Please select at least one white pattern or choose 'No White Markings'.");
+                return;
+            }
+
+            const patterns = noWhiteMarkingsSelected ? "no_white_markings" : Array.from(selectedPatterns).join('_');
+            location.href = `chestnutbase_step3.html?dilutions=${dilutions}&patterns=${patterns}`;
+        }
+    </script>
+</body>
+</html>
